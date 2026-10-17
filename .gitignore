@@ -1,0 +1,46 @@
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+tests/corpus/*.map
+.pytest_cache/
+build-out/
+
+# Local scratch and one-off run output.
+.scratch/
+.scratch-*/
+.bak-*/
+.coverage
+.*.log
+.*.txt
+
+# Captured tool output used as a test fixture; not a build artefact.
+!tests/logs/
+
+# Downloaded third-party asset kits. The record of what was downloaded and
+# under which licence lives in src/zmforge/props/library.py; the bytes do not
+# belong in git.
+# Spelled with a trailing /* rather than a trailing / because git will not
+# re-include anything under an excluded *directory*: the exception below needs
+# the directory itself to stay walkable.
+assets-cache/*
+
+# The fonts are fetched, not vendored; the record of what they are and
+# what licence they carry is the part worth keeping in the repo.
+!assets-cache/fonts/
+assets-cache/fonts/*
+!assets-cache/fonts/FONTS.json
+
+!tests/logs/*.log
+
+# A local copy of the official mod-tools PDFs, if you keep one; the tests that
+# read it skip without it.  The documents belong to Activision and Treyarch.
+docs/official-docs/
+
+# Your own mod tools copy, Wine prefix and settings never enter the repository.
+docker/bo3-wine/tools/
+docker/bo3-wine/wineprefix/
+docker/bo3-wine/logs/
+docker/bo3-wine/bo3-wine.env

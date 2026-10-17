@@ -1,0 +1,90 @@
+main: Enter
+FPU Precision set to 64 bits
+CoD2Map: T7
+ Build Changelist: 3421987
+ Build Machine: CODBUILD8-764
+---- cod2map ----
+navmesh = true
+navvolume = full generation
+----- FS_Startup -----
+Current search path:
+C:\Program Files (x86)\Steam\steamapps\common\Call of Duty Black Ops III 455130\share\devraw
+C:\Program Files (x86)\Steam\steamapps\common\Call of Duty Black Ops III 455130\bin\devdiscdata
+C:\Program Files (x86)\Steam\steamapps\common\Call of Duty Black Ops III 455130\bin\devraw
+C:\Program Files (x86)\Steam\steamapps\common\Call of Duty Black Ops III 455130\bin\raw
+C:\Program Files (x86)\Steam\steamapps\common\Call of Duty Black Ops III 455130\share\raw
+C:\Program Files (x86)\Steam\steamapps\common\Call of Duty Black Ops III 455130\bin\discdata
+C:/Program Files (x86)/Steam/steamapps/common/Call of Duty Black Ops III 455130/pc/\devdiscdata
+C:/Program Files (x86)/Steam/steamapps/common/Call of Duty Black Ops III 455130/pc/\devraw
+C:/Program Files (x86)/Steam/steamapps/common/Call of Duty Black Ops III 455130/pc/\raw
+C:/Program Files (x86)/Steam/steamapps/common/Call of Duty Black Ops III 455130/pc/\discdata
+C:\Program Files (x86)\Steam\steamapps\common\Call of Duty Black Ops III 455130\bin\main
+C:/Program Files (x86)/Steam/steamapps/common/Call of Duty Black Ops III 455130/pc/\main
+C:/Program Files (x86)/Steam/steamapps/common/Call of Duty Black Ops III 455130/pc/\players
+C:/Program Files (x86)/Steam/steamapps/common/Call of Duty Black Ops III 455130/pc/\zone
+C:/Program Files (x86)/Steam/steamapps/common/Call of Duty Black Ops III 455130/pc/\local_storage
+----------------------
+Connected to data signature database
+Loading map file C:\Program Files (x86)\Steam\steamapps\common\Call of Duty Black Ops III 455130\map_source\zm\zm_forge_gate.map
+WARNING: Material 'jun_art_wood_plywood_dark03' is missing
+WARNING: Material 'jun_art_wood_plywood_dark03' is missing
+WARNING: Material 'jun_art_wood_plywood_dark03' is missing
+WARNING: Material 'jun_art_wood_plywood_dark03' is missing
+WARNING: Material 'jun_art_wood_plywood_dark03' is missing
+WARNING: Material 'jun_art_wood_plywood_dark03' is missing
+reveal volume decal texture 1x1, 9 bytes. 0 packed 0 unpacked. 0 voldecals.
+restricting BSP to sky brushes
+writing C:\Program Files (x86)\Steam\steamapps\common\Call of Duty Black Ops III 455130\share\raw\maps\zm\zm_forge_gate.d3dprt
+
+finding triangle windings...
+assigning primary lights...
+splitting windings into lightable areas...
+coalescing coincident windings...
+removing occluded winding fragments...
+finding sun shadow casters...
+splitting large windings...
+merging into concave windings...
+fixing t-junctions...
+tethering holes to their concave windings...
+finding index mapping and snapping vertices...
+triangulating all windings...
+0 self-tjunctions fixed
+0 degenerate tris removed
+smoothing normals...
+emitting triangles...
+0 vertices couldn't be merged because the textures point different ways
+emitting cells and portals...
+
+building curve/terrain collision...
+Adding brush neighbor bevels...
+Removing redundant brush collision planes...
+removed 0 brush sides
+elapsed time 0 seconds
+Finished processing world entity
+
+Ignoring empty brush model entity
+Map C:\Program Files (x86)\Steam\steamapps\common\Call of Duty Black Ops III 455130\map_source\zm\zm_forge_gate.map entity 47
+splitting up large himip volumes...
+    surfCount went from 8 to 43
+
+Umbra Visibility Groups: 1 groups
+
+<worldvisgroup>      0
+
+
+Umbra Tome Triggers: 0 total
+
+
+
+begin navmesh generation...
+UMBRA smallest_occluder=72.000 small_hole=4.000
+removed 0 duplicate triangles from set of 600 - 0.0 seconds
+generating Nav Mesh ...
+Removing tiny boundary edges...
+ done - 0.0 seconds 
+WARNING: NavVolume generation is skipped. Flying units might not behave correctly. This might be due to there is no nav_volume brush in the level, or the generation is skipped purposely by skipping -navvolume option.
+Writing C:\Program Files (x86)\Steam\steamapps\common\Call of Duty Black Ops III 455130\share\raw\maps\zm\zm_forge_gate_navmesh.hkt
+Writing C:\Program Files (x86)\Steam\steamapps\common\Call of Duty Black Ops III 455130\share\raw\maps\zm\zm_forge_gate_navvolume.hkt
+Writing C:\Program Files (x86)\Steam\steamapps\common\Call of Duty Black Ops III 455130\share\raw\maps\zm\zm_forge_gate.d3dbsp
+    0 seconds elapsed
+main: 0.472918 secs

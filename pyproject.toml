@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "zmforge"
+version = "0.1.0"
+description = "Generate Black Ops III zombies map sources, scripts and asset manifests from a validated blueprint."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "PolyForm-Noncommercial-1.0.0"
+license-files = ["LICENSE"]
+dependencies = ["numpy>=1.26", "pillow>=10", "scipy>=1.11"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10", "fast-simplification>=0.1.7"]
+# The texture chain only.  The map generator itself has no dependencies, and
+# `zmforge generate`/`check`/`paths` must keep working without these.
+textures = ["numpy>=1.26", "pillow>=10", "scipy>=1.11"]
+# Importing dense glTF photoscans as props (props/simplify.py): quadric
+# decimation, CPU only.  The kit props do not need it.
+props = ["numpy>=1.26", "pillow>=10", "fast-simplification>=0.1.7"]
+
+[project.scripts]
+zmforge = "zmforge.facade.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"zmforge.texture" = ["templates/*.tmpl"]
+"zmforge.blueprint" = ["installed_assets.json"]
+"zmforge.props" = ["*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["error"]

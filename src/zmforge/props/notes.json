@@ -1,0 +1,1044 @@
+{
+  "schema_version": 1,
+  "generated_by": "notes from render reviews of maps built with these models, and from measuring passes over the stock models",
+  "_field_guide": {
+    "renders": "ok | dark | blank | wrong_colour | editor_invisible",
+    "reads_as": "what a player or reviewer sees, in plain words",
+    "needs": "partner props or parts this model requires to read correctly, e.g. [\"rail\"], [\"desk\", \"chair_facing\"]",
+    "placement": "wall | floor | surface | ceiling | hanging",
+    "origin_offset": "a pointer into stock_origins.json (unit + axis), never a copy of the numbers -- re-run a measuring pass over the tools' models and this could drift",
+    "local_tools": "not stored here: notes.py derives it from blueprint/installed_assets.json, the ledger Z13 judges misc_models by (present | missing), so the two cannot disagree",
+    "use_instead": "a model or technique that reads correctly in its place",
+    "confidence": "measured (code, geometry, a linker log, or a fix that was swap-verified) | review_only (came from an AI render review and was not independently checked)",
+    "source": "the evidence behind the note: a shipped file, a test, or the kind of review that found it",
+    "pattern": "categories only: an fnmatch glob over model names, for the categories a check applies (Z59)",
+    "solid": "false for a walk-through model (no collision), true for one that blocks",
+    "size": "[x, y, z] drawn extent at scale 1, in units, measured off MODEL_BOX",
+    "rules": "declarative placement rules Z60 judges (verify/prop_rules.py), on a model or a category; a model's own rules override its categories', null drops one",
+    "applies_to": "categories only: \"massing\" for a category over brush ids (the scarecrow's parts); default model names"
+  },
+  "models": {
+    "p6_bar_beer_glass": {
+      "use_instead": "coffee mugs (the swap used for the Juggernog lemonade crate in zm_corn_maze)",
+      "confidence": "measured",
+      "source": "unlinkable per src/zmforge/blueprint/installed_assets.json (xmodels_unlinkable, Z13); render-and-fix pass"
+    },
+    "p7_3arc_lobby_picture_41x29": {
+      "renders": "dark",
+      "reads_as": "a flat dark grey-teal panel with a faint checker, on every wall and at every yaw",
+      "placement": "wall",
+      "use_instead": "p7_picture_frame_modern_01",
+      "confidence": "measured",
+      "source": "src/zmforge/props/reads_badly.py; corn maze renders; settled by a side-by-side render with p7_picture_frame_modern_01 on the same zm_dmv wall: the frame drew its painting, this drew dark. Swapped out of zm_dmv and zm_cemetery"
+    },
+    "p7_bench_modern_01": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "unknown",
+        "front_how": "a front-measuring pass: no clear reading (seat: no backrest or seat band; back_plane: thin axis y -9.0..+9.0 (18.0 deep, long side 80.0) (body both sides of origin))"
+      }
+    },
+    "p7_box_wood_wine_storage": {
+      "renders": "wrong_colour",
+      "reads_as": "wine crates -- no matter what it is dressed as",
+      "placement": "surface",
+      "use_instead": "archive boxes, cartons or lab crates for a non-wine context",
+      "confidence": "review_only",
+      "source": "design review renders"
+    },
+    "p7_cai_fridge_metal_plant": {
+      "renders": "ok",
+      "reads_as": "a lettered machine front from its west face; a plain beige box from any other angle",
+      "placement": "floor",
+      "needs": [
+        "lettering / a red glow on every approach face, not only one"
+      ],
+      "confidence": "review_only",
+      "source": "design review renders: lettered on the west face only, a plain beige box from the east",
+      "rules": {
+        "front": "unknown",
+        "front_how": "a front-measuring pass: no clear reading (seat: backrest centroid to seat centroid -1.9 x +2.0 y (not clear); back_plane: thin axis x -0.0..+24.3 (24.3 deep, long side 48.0) (not thin))"
+      }
+    },
+    "p7_cai_monitor_wall_large": {
+      "renders": "dark",
+      "reads_as": "a plain black rectangle when used as a wall screen",
+      "placement": "wall",
+      "confidence": "review_only",
+      "source": "design review renders",
+      "rules": {
+        "front": "-y",
+        "front_how": "a front-measuring pass, back_plane: thin axis y -6.1..-0.0 (6.1 deep, long side 123.1); agrees with recipes/props.py _mount_face off MODEL_BOX; stock prefab chairs in front of it: {'-y': 4}"
+      }
+    },
+    "p7_cai_signage_plastic_exit": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "unknown",
+        "front_how": "a front-measuring pass: no clear reading (seat: no backrest or seat band; back_plane: thin axis y -1.3..+1.3 (2.6 deep, long side 17.0) (body both sides of origin))",
+        "mount": null,
+        "faces": null
+      },
+      "reads_as": "a two-sided exit sign: it hangs or sticks out from a wall, so it is not held to the wall rules"
+    },
+    "p7_cai_work_table_metal_03_white": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "unknown",
+        "front_how": "a front-measuring pass: no clear reading (seat: backrest centroid to seat centroid +0.1 x -15.0 y; back_plane: thin axis x -10.6..+10.6 (21.2 deep, long side 81.1) (body both sides of origin))"
+      }
+    },
+    "p7_chair_lab_01": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "-y",
+        "front_how": "a front-measuring pass, seat: backrest centroid to seat centroid -0.0 x -8.6 y; agrees with recipes/props.py MODEL_FRONT"
+      }
+    },
+    "p7_chair_lab_02": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "unknown",
+        "front_how": "a front-measuring pass: no clear reading (seat: backrest centroid to seat centroid +0.0 x -1.0 y (not clear); back_plane: thin axis y -18.4..+15.4 (33.8 deep, long side 35.5) (not thin))"
+      }
+    },
+    "p7_chair_waiting_room_01_blue": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "-y",
+        "front_how": "a front-measuring pass, seat: backrest centroid to seat centroid -0.0 x -5.1 y; agrees with recipes/props.py MODEL_FRONT"
+      }
+    },
+    "p7_chair_wood_fancy_01": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "-y",
+        "front_how": "a front-measuring pass, seat: backrest centroid to seat centroid +0.0 x -10.5 y; agrees with recipes/props.py MODEL_FRONT"
+      }
+    },
+    "p7_clock_metal_wall_01_base": {
+      "renders": "wrong_colour",
+      "reads_as": "a small teal cube with no face or detail -- the base is not a complete clock",
+      "placement": "wall",
+      "needs": [
+        "a clock-face part, or use a complete wall-clock model instead"
+      ],
+      "confidence": "review_only",
+      "source": "design review renders",
+      "rules": {
+        "front": "unknown",
+        "front_how": "a front-measuring pass: no clear reading (seat: backrest centroid to seat centroid -0.0 x -0.8 y (not clear); back_plane: thin axis y -3.8..+2.0 (5.8 deep, long side 32.0) (body both sides of origin))"
+      }
+    },
+    "p7_cloth_drape_01_beige": {
+      "renders": "ok",
+      "placement": "hanging",
+      "needs": [
+        "rail"
+      ],
+      "confidence": "measured",
+      "source": "design review"
+    },
+    "p7_cloth_drape_02_beige": {
+      "renders": "ok",
+      "placement": "hanging",
+      "needs": [
+        "rail"
+      ],
+      "origin_offset": "87 units off its catalogue box -- see stock_origins.json[\"models\"][\"p7_cloth_drape_02_beige\"][\"root\"]",
+      "confidence": "measured",
+      "source": "src/zmforge/props/stock_origins.json; design review render (drapes hung with swapped yaws, fixed with dressing.hang_bar)"
+    },
+    "p7_clothes_hanging_01_pants": {
+      "renders": "editor_invisible",
+      "reads_as": "nothing -- does not draw in the Radiant render",
+      "placement": "hanging",
+      "use_instead": "build the clothes from brushes (flannel body / denim legs)",
+      "confidence": "measured",
+      "source": "corn maze design review render"
+    },
+    "p7_clothes_hanging_01_tshirt": {
+      "renders": "editor_invisible",
+      "reads_as": "nothing -- does not draw in the Radiant render",
+      "placement": "hanging",
+      "use_instead": "build the clothes from brushes (flannel body / denim legs)",
+      "confidence": "measured",
+      "source": "corn maze design review render: the stock hanging shirts did not draw, so the clothes there are brushes"
+    },
+    "p7_computer_mobile_military_open": {
+      "renders": "wrong_colour",
+      "reads_as": "a folded dolly or exercise frame, or an empty glass/wire box outline; it does not read as electronic equipment",
+      "placement": "floor",
+      "needs": [
+        "dressing on top (screen, dials, a cart load) to read as equipment"
+      ],
+      "confidence": "review_only",
+      "source": "design review renders"
+    },
+    "p7_consumer_grade_monitor_medium": {
+      "renders": "dark",
+      "reads_as": "a plain black screen in the editor render (a renderer limit, not a map defect)",
+      "placement": "surface",
+      "needs": [
+        "desk",
+        "chair_facing"
+      ],
+      "origin_offset": "134 units off its catalogue box -- see stock_origins.json[\"models\"][\"p7_consumer_grade_monitor_medium\"][\"root\"]",
+      "confidence": "measured",
+      "source": "src/zmforge/props/stock_origins.json; src/zmforge/recipes/dmv_rooms/office.py (always placed with a desk + seated facing chair)",
+      "rules": {
+        "front": "unknown",
+        "front_how": "a front-measuring pass: no clear reading (seat: backrest centroid to seat centroid +0.0 x +2.8 y (not clear); back_plane: thin axis y -2.3..+4.3 (6.6 deep, long side 61.5) (body both sides of origin))"
+      }
+    },
+    "p7_consumer_grade_monitor_wall_medium": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "-y",
+        "front_how": "a front-measuring pass, back_plane: thin axis y -3.0..-0.0 (3.0 deep, long side 61.5); agrees with recipes/props.py _mount_face off MODEL_BOX; stock prefab chairs in front of it: {'-y': 4}"
+      }
+    },
+    "p7_couch_modern_leather": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "-y",
+        "front_how": "a front-measuring pass, seat: backrest centroid to seat centroid -3.4 x -19.7 y"
+      }
+    },
+    "p7_desk_metal_military_02": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "unknown",
+        "front_how": "a front-measuring pass: no clear reading (seat: backrest centroid to seat centroid +0.4 x +4.6 y; back_plane: thin axis y -19.0..+18.0 (37.0 deep, long side 90.0) (body both sides of origin))"
+      }
+    },
+    "p7_desk_metal_old_01": {
+      "renders": "wrong_colour",
+      "reads_as": "the whole desk bright magenta with black DELETE lettering: its one material, mtl_p_ger_metal_desk, is a Der Riese placeholder whose colorMap is the image 'deleteme'",
+      "use_instead": "p7_desk_metal_old_01_body",
+      "confidence": "measured",
+      "source": "zm_cemetery shed desk; bake log 'Failed to load image 'deleteme' for material 'mtl_p_ger_metal_desk''; lod0 names only that material; t7_props_der_riese.gdt colorMap deleteme"
+    },
+    "p7_duct_metal_circular_straight_32": {
+      "renders": "ok",
+      "reads_as": "a straight duct run, once placed by its drawn box",
+      "placement": "wall",
+      "origin_offset": "150 units off its catalogue box on Y -- see stock_origins.json[\"models\"][\"p7_duct_metal_circular_straight_32\"][\"root\"]",
+      "needs": [
+        "place by MODEL_BOX / drawn_box, never the raw CATALOGUE_BOX"
+      ],
+      "confidence": "measured",
+      "source": "src/zmforge/props/stock_origins.json; tests/test_stock_origins.py; design review render"
+    },
+    "p7_electrical_box_tall_red": {
+      "renders": "wrong_colour",
+      "reads_as": "a grey breaker panel; the red in its name does not show",
+      "placement": "floor",
+      "use_instead": "p7_cai_fridge_metal_plant for a red, lettered machine front",
+      "confidence": "review_only",
+      "source": "design review renders"
+    },
+    "p7_foliage_grass_tall_single_lrg": {
+      "reads_as": "thin dry-brown reeds; scaled about 1.5x in the corn maze's corn bands it stands well under a 200-unit wall and does not read as corn",
+      "placement": "floor",
+      "solid": false,
+      "size": [
+        48,
+        52,
+        99
+      ],
+      "confidence": "measured",
+      "source": "before/after render with every corn stalk swapped to it"
+    },
+    "p7_foliage_plant_meskel_1_yellow": {
+      "renders": "wrong_colour",
+      "reads_as": "a flat orange octagon",
+      "placement": "floor",
+      "confidence": "review_only",
+      "source": "design review renders"
+    },
+    "p7_generator_large_01_housing_rusted": {
+      "renders": "blank",
+      "reads_as": "a hut-shaped shell, not a working generator",
+      "placement": "floor",
+      "use_instead": "p7_zm_der_generator_01, which draws as a working generator",
+      "confidence": "review_only",
+      "source": "design review renders"
+    },
+    "p7_light_fixture_led_wall_01": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "+x",
+        "front_how": "a front-measuring pass, back_plane: thin axis x -0.0..+9.4 (9.4 deep, long side 64.0); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_light_hanging_modern_02": {
+      "renders": "dark",
+      "reads_as": "a large, dark drum pendant, oversized for the room it hangs in",
+      "placement": "ceiling",
+      "confidence": "review_only",
+      "source": "design review renders"
+    },
+    "p7_lightswitch_metal_m_sensor": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "+y",
+        "front_how": "a front-measuring pass, back_plane: thin axis y +0.0..+0.4 (0.4 deep, long side 4.3); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_monitor_curved_military": {
+      "renders": "dark",
+      "reads_as": "a dark wall monitor / switched-off TV in the editor render",
+      "placement": "surface",
+      "needs": [
+        "desk",
+        "chair_facing"
+      ],
+      "confidence": "review_only",
+      "source": "design review renders (desks laid without a chair)",
+      "rules": {
+        "front": "unknown",
+        "front_how": "a front-measuring pass: no clear reading (seat: backrest centroid to seat centroid +0.0 x +1.7 y (not clear); back_plane: thin axis y -4.9..+0.9 (5.9 deep, long side 59.6) (body both sides of origin))"
+      }
+    },
+    "p7_picture_frame_modern_01": {
+      "renders": "ok",
+      "reads_as": "its painting, correctly, on every wall tried",
+      "placement": "wall",
+      "confidence": "measured",
+      "source": "src/zmforge/props/reads_badly.py; corn maze design review render",
+      "rules": {
+        "front": "-y",
+        "front_how": "a front-measuring pass, back_plane: thin axis y -1.0..+0.0 (1.0 deep, long side 28.5); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_sgen_chair_dining_future": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "+x",
+        "front_how": "a front-measuring pass, seat: backrest centroid to seat centroid +15.5 x -0.0 y; agrees with recipes/props.py MODEL_FRONT"
+      }
+    },
+    "p7_sign_aerofarm_01": {
+      "renders": "wrong_colour",
+      "reads_as": "a modern indoor-farm company's sign -- a different, real farm, not the map's",
+      "placement": "wall",
+      "use_instead": "a lettered board built for the map instead of a stock sign",
+      "confidence": "measured",
+      "source": "src/zmforge/props/reads_badly.py, corn maze design review"
+    },
+    "p7_signage_caution_biohazard_01": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "-y",
+        "front_how": "a front-measuring pass, back_plane: thin axis y -0.3..+0.0 (0.3 deep, long side 28.0); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_signage_caution_exit": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "-y",
+        "front_how": "a front-measuring pass, back_plane: thin axis y -0.2..+0.0 (0.2 deep, long side 28.0); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_signage_caution_warning_01": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "-y",
+        "front_how": "a front-measuring pass, back_plane: thin axis y -0.3..+0.0 (0.3 deep, long side 28.0); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_signage_loading_zone_01": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "-y",
+        "front_how": "a front-measuring pass, back_plane: thin axis y -0.2..+0.0 (0.2 deep, long side 28.0); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_signage_loading_zone_02": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "-y",
+        "front_how": "a front-measuring pass, back_plane: thin axis y -0.9..+0.0 (0.9 deep, long side 18.0); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_sink_kitchen_stainless_modern_01_clean": {
+      "renders": "ok",
+      "placement": "wall",
+      "needs": [
+        "legs"
+      ],
+      "confidence": "measured",
+      "source": "a sink's legs are laid after the sink is placed, or a sink that is dropped leaves its legs standing; tests/test_prop_rules.py (a sink with nothing under it warns)",
+      "rules": {
+        "front": "-y",
+        "front_how": "a front-measuring pass: thin axis y -25.4..+0.8 (26.2 deep, long side 44.6) (not thin); not thin enough for back_plane, but the body lies wholly on -y of an origin 0.8 from its back, so its back is the origin plane"
+      }
+    },
+    "p7_trashcan_metal_modern_glass": {
+      "renders": "wrong_colour",
+      "reads_as": "an industrial drum or incinerator, not an office bin",
+      "placement": "floor",
+      "confidence": "review_only",
+      "source": "design review renders"
+    },
+    "p7_zm_der2_bulletin_board": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "+y",
+        "front_how": "a front-measuring pass, back_plane: thin axis y +0.0..+2.2 (2.2 deep, long side 61.9); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_zm_der2_poster_anatomy_01": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "+x",
+        "front_how": "a front-measuring pass, back_plane: thin axis x -0.1..+4.2 (4.3 deep, long side 37.9); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_zm_der2_poster_anatomy_02": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "+x",
+        "front_how": "a front-measuring pass, back_plane: thin axis x -0.0..+7.6 (7.6 deep, long side 48.4); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_zm_der2_poster_anatomy_03": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "+x",
+        "front_how": "a front-measuring pass, back_plane: thin axis x -0.2..+2.5 (2.7 deep, long side 38.3); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_zm_der2_poster_anatomy_04": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "+x",
+        "front_how": "a front-measuring pass, back_plane: thin axis x -0.0..+2.9 (2.9 deep, long side 29.4); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_zm_der2_poster_anatomy_05": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "+x",
+        "front_how": "a front-measuring pass, back_plane: thin axis x -0.0..+5.0 (5.0 deep, long side 29.7); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_zm_der2_poster_anatomy_06": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "+x",
+        "front_how": "a front-measuring pass, back_plane: thin axis x -0.2..+3.1 (3.3 deep, long side 18.8); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_zm_der2_poster_anatomy_07": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "+x",
+        "front_how": "a front-measuring pass, back_plane: thin axis x -0.0..+2.8 (2.8 deep, long side 18.9); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_zm_der2_signage_hazard_01": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "-y",
+        "front_how": "a front-measuring pass, back_plane: thin axis y -0.7..-0.0 (0.7 deep, long side 15.2); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_zm_der_chalkboard_vintage": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "unknown",
+        "front_how": "a front-measuring pass: no clear reading (seat: backrest centroid to seat centroid -0.0 x +0.0 y (not clear); back_plane: thin axis y -13.0..+13.0 (26.0 deep, long side 76.1) (body both sides of origin))"
+      }
+    },
+    "p7_zm_der_light_spot_housing": {
+      "renders": "wrong_colour",
+      "reads_as": "loudspeaker horns and globes, not spotlights, when hung overhead",
+      "placement": "ceiling",
+      "confidence": "review_only",
+      "source": "design review renders"
+    },
+    "p7_zm_der_signage_caution": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "-y",
+        "front_how": "a front-measuring pass, back_plane: thin axis y -0.4..-0.0 (0.4 deep, long side 6.3); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_zm_der_signage_employees_only": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "-y",
+        "front_how": "a front-measuring pass, back_plane: thin axis y -0.7..+0.0 (0.7 deep, long side 10.0); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_zm_der_signage_hazard_03": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "-y",
+        "front_how": "a front-measuring pass, back_plane: thin axis y -0.7..-0.0 (0.7 deep, long side 15.2); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_zm_der_signage_hazard_04": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "-y",
+        "front_how": "a front-measuring pass, back_plane: thin axis y -0.7..-0.0 (0.7 deep, long side 15.2); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_zm_der_signage_hazard_05": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "-y",
+        "front_how": "a front-measuring pass, back_plane: thin axis y -0.7..-0.0 (0.7 deep, long side 15.2); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_zm_der_signage_hazmat_suit": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "-y",
+        "front_how": "a front-measuring pass, back_plane: thin axis y -0.7..+0.0 (0.7 deep, long side 6.8); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_zm_der_signage_no_smoking": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "-y",
+        "front_how": "a front-measuring pass, back_plane: thin axis y -0.7..+0.0 (0.7 deep, long side 10.0); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_zm_der_signage_office_maxis": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "-y",
+        "front_how": "a front-measuring pass, back_plane: thin axis y -0.9..+0.0 (0.9 deep, long side 34.3); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_zm_der_signage_steps": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "-y",
+        "front_how": "a front-measuring pass, back_plane: thin axis y -0.8..+0.0 (0.8 deep, long side 25.5); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_zm_der_signage_wash_hands": {
+      "confidence": "measured",
+      "source": "a front-measuring pass",
+      "rules": {
+        "front": "-y",
+        "front_how": "a front-measuring pass, back_plane: thin axis y -0.7..+0.0 (0.7 deep, long side 6.8); agrees with recipes/props.py _mount_face off MODEL_BOX"
+      }
+    },
+    "p7_zm_der_switch_box": {
+      "renders": "blank",
+      "reads_as": "a bare pillar or blank tan/white slab, not an electrical panel",
+      "placement": "wall",
+      "confidence": "review_only",
+      "source": "design review renders"
+    },
+    "p7_zm_der_trap_control_box": {
+      "renders": "wrong_colour",
+      "reads_as": "a trap switch, or a teal/greenish gas canister; a label above it does not make it read as a push button",
+      "placement": "surface",
+      "needs": [
+        "a label plate and a lit glow to read as the interactable, or swap for a button model"
+      ],
+      "confidence": "review_only",
+      "source": "design review renders"
+    },
+    "zmf_prop_corn_stalk": {
+      "reads_as": "a generated late-season corn stalk (props/corn.py): thin tapered stem, 14 rising-then-drooping folded leaves, two husked ears, a tassel; ambientCG Leaf001 CC0 photo graded olive to straw. Replaced the teal/cartoon Kenney stalk under the same name and box",
+      "placement": "floor",
+      "confidence": "measured",
+      "source": "src/zmforge/props/corn.py and library.CORN_LEAF; box: recipes/props.py MODEL_BOX, tests/test_corn_stalk.py; corn maze render and walk-through",
+      "solid": false,
+      "size": [
+        34,
+        34,
+        96
+      ],
+      "use_instead": "keep this stalk; the stock tall-grass stand-in rendered worse"
+    },
+    "zmf_prop_corn_stalk_thin": {
+      "reads_as": "a leaner generated corn stalk (props/corn.py): 12 leaves, one husked ear, a tassel; same graded leaf photo as zmf_prop_corn_stalk",
+      "placement": "floor",
+      "confidence": "measured",
+      "source": "src/zmforge/props/corn.py and library.CORN_LEAF; box: recipes/props.py MODEL_BOX, tests/test_corn_stalk.py; corn maze walk-through",
+      "solid": false,
+      "size": [
+        22,
+        22,
+        90
+      ]
+    },
+    "zmf_prop_dead_log": {
+      "reads_as": "a fallen dead tree trunk lying on the ground, 10 ft long and about 11 in thick (Poly Haven dead_tree_trunk photoscan, 101,802 -> 11,999 triangles)",
+      "placement": "floor",
+      "confidence": "measured",
+      "source": "src/zmforge/props/library.py (Poly Haven CC0 glTF, quadric-decimated by props/simplify.py); size measured off recipes/props.py MODEL_BOX",
+      "solid": true,
+      "size": [
+        120,
+        10.9,
+        11.4
+      ]
+    },
+    "zmf_prop_fence_iron": {
+      "renders": "wrong_colour",
+      "reads_as": "salmon in the Radiant preview, same as zmf_prop_fence_wood",
+      "placement": "floor",
+      "confidence": "review_only",
+      "source": "corn maze design review renders"
+    },
+    "zmf_prop_fence_wood": {
+      "renders": "wrong_colour",
+      "reads_as": "salmon in the Radiant preview (kit colour, not recoloured yet)",
+      "placement": "floor",
+      "confidence": "review_only",
+      "source": "corn maze design review renders"
+    },
+    "zmf_prop_hand_cart": {
+      "use_instead": "p7_wheel_barrow_street_vendor (stock, links, in MODEL_BOX): a realistic wooden barrow in place of the Kenney low-poly cart",
+      "confidence": "measured",
+      "source": "a scan of the stock models against the Z13 ledger, and Poly Haven, ambientCG and Sketchfab CC0 searches; swapped for the stock barrow in the corn maze recipe (the cemetery recipe still places the cart)"
+    },
+    "zmf_prop_hay_bale": {
+      "reads_as": "a bevelled square bale of photographed straw with two tan twine bands (generated geometry, ambientCG ThatchedRoof001A CC0 colour map); replaced the pink Kenney bale under the same name and box",
+      "placement": "floor",
+      "confidence": "measured",
+      "source": "src/zmforge/props/generated.py and library.py STRAW_BALE; box pinned to recipes/props.py MODEL_BOX by tests/test_realistic_props.py",
+      "solid": true,
+      "size": [
+        40,
+        26.5,
+        23.4
+      ]
+    },
+    "zmf_prop_hay_bale_stack": {
+      "reads_as": "a bigger three-string bale of the same straw; the corn maze stands a zmf_prop_hay_bale on it as one 48-unit bale pair",
+      "placement": "floor",
+      "confidence": "measured",
+      "source": "src/zmforge/props/generated.py and library.py STRAW_BALE; box pinned to recipes/props.py MODEL_BOX by tests/test_realistic_props.py",
+      "solid": true,
+      "size": [
+        40,
+        28.4,
+        25
+      ]
+    },
+    "zmf_prop_jack_o_lantern": {
+      "renders": "ok",
+      "placement": "floor",
+      "solid": true,
+      "size": [
+        16,
+        16,
+        13.6
+      ],
+      "confidence": "measured",
+      "source": "corn maze design review; size measured off recipes/props.py MODEL_BOX"
+    },
+    "zmf_prop_pumpkin": {
+      "reads_as": "a low-poly cartoon pumpkin (Kenney Graveyard Kit)",
+      "placement": "floor",
+      "confidence": "measured",
+      "source": "a scan of the stock models against the Z13 ledger, and Poly Haven, ambientCG and Sketchfab CC0 searches; no linkable stock pumpkin and no CC0 photoscan found, so it stays until one is scanned or textured"
+    },
+    "zmf_prop_teddy_bear": {
+      "use_instead": "p7_zm_teddybear (stock, links, in MODEL_BOX, 18x12x28)",
+      "confidence": "measured",
+      "source": "a scan of the stock models against the Z13 ledger, and Poly Haven, ambientCG and Sketchfab CC0 searches; swapped for p7_zm_teddybear in the dmv recipe"
+    },
+    "zmf_prop_tree_stump": {
+      "reads_as": "a low tree stump with its roots spread out (Poly Haven tree_stump_01 photoscan, 41,046 -> 9,999 triangles)",
+      "placement": "floor",
+      "confidence": "measured",
+      "source": "src/zmforge/props/library.py (Poly Haven CC0 glTF, quadric-decimated by props/simplify.py); size measured off recipes/props.py MODEL_BOX",
+      "solid": true,
+      "size": [
+        56.3,
+        62.9,
+        22.7
+      ]
+    },
+    "zmf_prop_wooden_crate": {
+      "reads_as": "a long weathered wooden shipping crate (Poly Haven wooden_crate_02, 5,176 triangles, not decimated)",
+      "placement": "floor",
+      "confidence": "measured",
+      "source": "src/zmforge/props/library.py (Poly Haven CC0 glTF, quadric-decimated by props/simplify.py); size measured off recipes/props.py MODEL_BOX",
+      "solid": true,
+      "size": [
+        20.9,
+        46,
+        18.3
+      ]
+    },
+    "zmf_prop_dead_tree_a": {
+      "reads_as": "a 300-unit bare dead tree, five heavy crooked limbs (generated round tapered limbs on a thick trunk, ambientCG Bark012 CC0 bark graded dark grey); replaced the cemetery's square brush trees",
+      "placement": "floor",
+      "confidence": "measured",
+      "source": "src/zmforge/props/dead_tree.py and library.py DEAD_BARK; box in recipes/props.py MODEL_BOX, trunk collision in KIT_COLLISION_BOX",
+      "solid": true,
+      "size": [
+        226,
+        226,
+        300
+      ]
+    },
+    "zmf_prop_dead_tree_b": {
+      "reads_as": "a 270-unit leaning bare dead tree, four heavy limbs (generated round tapered limbs on a thick trunk, ambientCG Bark012 CC0 bark graded dark grey); replaced the cemetery's square brush trees",
+      "placement": "floor",
+      "confidence": "measured",
+      "source": "src/zmforge/props/dead_tree.py and library.py DEAD_BARK; box in recipes/props.py MODEL_BOX, trunk collision in KIT_COLLISION_BOX",
+      "solid": true,
+      "size": [
+        190,
+        190,
+        270
+      ]
+    },
+    "zmf_prop_dead_tree_c": {
+      "reads_as": "a 330-unit tall bare dead tree, four heavy limbs (generated round tapered limbs on a thick trunk, ambientCG Bark012 CC0 bark graded dark grey); replaced the cemetery's square brush trees",
+      "placement": "floor",
+      "confidence": "measured",
+      "source": "src/zmforge/props/dead_tree.py and library.py DEAD_BARK; box in recipes/props.py MODEL_BOX, trunk collision in KIT_COLLISION_BOX",
+      "solid": true,
+      "size": [
+        218,
+        218,
+        330
+      ]
+    },
+    "zmf_prop_dead_tree_d": {
+      "reads_as": "a 400-unit big gnarled dead tree, twisted trunk (generated round tapered limbs on a thick trunk, ambientCG Bark012 CC0 bark graded dark grey); replaced the cemetery's square brush trees",
+      "placement": "floor",
+      "confidence": "measured",
+      "source": "src/zmforge/props/dead_tree.py and library.py DEAD_BARK; box in recipes/props.py MODEL_BOX, trunk collision in KIT_COLLISION_BOX",
+      "solid": true,
+      "size": [
+        260,
+        260,
+        400
+      ]
+    },
+    "zmf_prop_dead_tree_e": {
+      "reads_as": "a 440-unit big gnarled leaning dead tree (generated round tapered limbs on a thick trunk, ambientCG Bark012 CC0 bark graded dark grey); replaced the cemetery's square brush trees",
+      "placement": "floor",
+      "confidence": "measured",
+      "source": "src/zmforge/props/dead_tree.py and library.py DEAD_BARK; box in recipes/props.py MODEL_BOX, trunk collision in KIT_COLLISION_BOX",
+      "solid": true,
+      "size": [
+        284,
+        284,
+        440
+      ]
+    },
+    "zmf_prop_gamble_atm": {
+      "reads_as": "a free-standing, battered cash machine about 91 tall: bolted steel safe with a dented corner, sloped keypad deck with 16 modelled keys, hooded glowing screen (INSERT 2,000 / WIN 10,000), card reader, cash drawer, taped OUT OF ORDER? note, and a lit LUCKY 4 topper with a dome camera. The gamble machine's body (2,000 points for a 1 in 4 shot at 10,000)",
+      "placement": "floor",
+      "front": "-y",
+      "confidence": "measured",
+      "source": "src/zmforge/props/atm.py (geometry, baked colour + normal map), library.py ATM_BODY / ATM_GLOW; box in recipes/props.py MODEL_BOX, cabinet collision in KIT_COLLISION_BOX. Origin at the floor centre of the anchor plate; front (screen, keypad) faces -y at yaw 0 like the stock perk machines; the keypad is about 46 up and 15 in front of the origin",
+      "solid": true,
+      "size": [
+        44,
+        36,
+        90.9
+      ]
+    }
+  },
+  "categories": {
+    "perk_machine": {
+      "match": "any stock perk vending prefab (e.g. vending_*_struct, script_struct machines placed by src/zmforge/script/perks.py)",
+      "renders": "editor_invisible",
+      "reads_as": "nothing -- the machine is a script_struct carrying a model key, which the game spawns and Radiant never draws. This is a render-tool limit, not a missing prop.",
+      "placement": "floor",
+      "confidence": "measured",
+      "source": "corn maze review: none of the six perk machines shows in any render, which is a render limit and not a missing model"
+    },
+    "script_model": {
+      "match": "any model spawned in game by script rather than placed in the .map (e.g. the scarecrow's jack head, boss reveal pieces)",
+      "renders": "editor_invisible",
+      "reads_as": "nothing in a Radiant render; only confirmed in play",
+      "placement": "floor",
+      "confidence": "measured",
+      "source": "corn maze renders: the head is the script's jack, spawned in game, so it never draws in the editor render"
+    },
+    "curtain": {
+      "match": "any p7_cloth_drape_* model",
+      "needs": [
+        "rail"
+      ],
+      "placement": "hanging",
+      "confidence": "measured",
+      "source": "src/zmforge/dressing/fixtures.py hang_bar; design review of hung drapes",
+      "pattern": "p7_cloth_drape_*"
+    },
+    "duct_kit": {
+      "match": "any p7_duct_metal_circular_* model",
+      "reads_as": "each length, elbow and joint has its own large root-bone offset (32 to 400 units on one axis); the raw CATALOGUE_BOX is always wrong for these",
+      "needs": [
+        "place by MODEL_BOX / drawn_box, never CATALOGUE_BOX raw -- see origins.py"
+      ],
+      "confidence": "measured",
+      "source": "src/zmforge/props/stock_origins.json (the circular duct kit is the worst, up to 200 units off)",
+      "pattern": "p7_duct_metal_circular_*"
+    },
+    "wall_monitor_or_screen": {
+      "match": "any p7_*monitor* or p7_cai_monitor_wall_* model used as a desk, wall or console screen",
+      "renders": "dark",
+      "reads_as": "black or dark grey in the Radiant preview -- a renderer limit seen on every map alike, not a per-map defect",
+      "needs": [
+        "desk",
+        "chair_facing"
+      ],
+      "confidence": "measured",
+      "source": "src/zmforge/recipes/dmv_rooms/office.py (monitor always paired with a desk + seated facing chair); design review renders (DMV counter screens drew black)"
+    },
+    "poster_or_wall_sign": {
+      "match": "any lettered poster, notice or picture-frame model",
+      "placement": "wall",
+      "reads_as": "reads correctly only mounted on a wall; the corn maze farmhouse pictures, DMV notices and lore boards are all wall-mounted, never floor",
+      "confidence": "review_only",
+      "source": "design rule, corroborated by every farmhouse and corridor picture placement reviewed",
+      "pattern": [
+        "p7_*poster*",
+        "p7_*signage*",
+        "p7_picture_frame_*",
+        "p7_zm_der2_bulletin_board",
+        "p7_clock_metal_wall_*"
+      ],
+      "rules": {
+        "mount": {
+          "on": "wall"
+        },
+        "faces": "room"
+      }
+    },
+    "named_brush_entity": {
+      "match": "any brush (script_brushmodel or other brush entity) given a targetname so a script can move or hide it",
+      "renders": "ok",
+      "reads_as": "draws in the editor render like any brush: naming it does not hide it, unlike a script-spawned model",
+      "confidence": "measured",
+      "source": "corn maze renders (static scarecrow heads as named brushes drew; the scripted jack head did not)"
+    },
+    "seat": {
+      "match": "any stock chair or couch",
+      "pattern": [
+        "p7_chair_*",
+        "p7_sgen_chair_*",
+        "p7_couch_*"
+      ],
+      "rules": {
+        "faces": {
+          "what": [
+            "p7_desk_*",
+            "p7_*table*",
+            "p7_*counter*"
+          ],
+          "within": 24
+        }
+      },
+      "confidence": "measured",
+      "source": "design rule: chairs face their desk; tests/test_props.py MODEL_FRONT (eleven zm_dmv chairs faced a wall without it)"
+    },
+    "desk_monitor": {
+      "match": "a monitor that stands on a desk",
+      "pattern": [
+        "p7_consumer_grade_monitor_medium",
+        "p7_monitor_curved_military"
+      ],
+      "rules": {
+        "faced_by": {
+          "what": [
+            "p7_chair_*",
+            "p7_sgen_chair_*",
+            "p7_couch_*",
+            "p7_bench_*"
+          ],
+          "within": 72
+        }
+      },
+      "confidence": "review_only",
+      "source": "design review renders (desks with monitors and no chair); recipes/dmv_rooms/office.py pairs every desk monitor with a seated chair"
+    },
+    "wall_screen": {
+      "match": "a wall-hung screen",
+      "pattern": [
+        "p7_cai_monitor_wall_*",
+        "p7_consumer_grade_monitor_wall_*"
+      ],
+      "rules": {
+        "mount": {
+          "on": "wall",
+          "height": [
+            40,
+            200
+          ]
+        },
+        "faces": "room"
+      },
+      "confidence": "review_only",
+      "source": "design rule (wall screens hang at eye height on a wall); design review renders"
+    },
+    "vending_machine": {
+      "match": "a stock perk vending model placed as a prop",
+      "pattern": "p7_zm_vending_*",
+      "rules": {
+        "front": "-y",
+        "front_how": "stock perk prefabs map_source/_prefabs/zm/zm_core/vending_*_struct.map: all six with attack spots put them at y -19 to -38 of the machine at yaw 0 (jugg, doubletap, marathon, revive, sleight, three_gun); the jugg prefab's front spot lights are at y -80 to -87",
+        "clearance_front": 32
+      },
+      "confidence": "measured",
+      "source": "stock perk prefabs (front); Z42 keeps the stand room of an interactive perk machine, and this rule keeps the front of a vending model placed as a prop clear the same way"
+    },
+    "sink": {
+      "match": "any stock sink",
+      "pattern": "p7_sink_*",
+      "rules": {
+        "needs_near": [
+          {
+            "what": [
+              "brush",
+              "*"
+            ],
+            "where": "below",
+            "within": 6,
+            "why": "legs or a counter under it"
+          }
+        ]
+      },
+      "confidence": "measured",
+      "source": "tests/test_prop_rules.py (a wall sink with nothing under it warns)"
+    },
+    "pipe_run": {
+      "match": "stock pipes and conduit",
+      "pattern": [
+        "p7_pipe_metal_*",
+        "p7_conduit_metal_*",
+        "p7_duct_metal_*"
+      ],
+      "rules": {
+        "connects": {
+          "gap": 4
+        }
+      },
+      "confidence": "review_only",
+      "source": "design rule: pipes and conduit run to a ceiling, floor or machine"
+    },
+    "scarecrow": {
+      "match": "the brush parts of a scarecrow (<name>_scarecrow_<part>)",
+      "applies_to": "massing",
+      "pattern": "*_scarecrow_*",
+      "rules": {
+        "assembly": {
+          "group_by": "_scarecrow_",
+          "gap": 4
+        }
+      },
+      "confidence": "measured",
+      "source": "corn maze design review (recipes/corn_maze_parts.py builds every scarecrow from brushes)"
+    }
+  },
+  "materials": {
+    "t7_acrylic_red_flake": {
+      "issue": "not in the clean catalogue -- the linker logs \"Failed to load image 'i_t7_acrylic_red_flake_g'\" (gloss map) and Radiant draws it dark grey-teal instead of red; still links, so the in-game colour is unverified",
+      "use_instead": "t7_metal_rust_ceiling_01",
+      "confidence": "measured",
+      "source": "a Z12 warning on a link that used it"
+    },
+    "t7_glass_plain_opaque": {
+      "issue": "renders as a flat grey band or stripe, not reflective glass",
+      "confidence": "review_only",
+      "source": "design review renders"
+    },
+    "t7_wood_planks_worn": {
+      "reads_as": "flat grey-brown at a distance: the plank lines vanish past a room's length",
+      "use_instead": "posts and rails over it (corn_maze_parts YARD_RAILS) so the face reads as boards",
+      "confidence": "review_only",
+      "source": "corn maze design review (farmyard walls read as earth)"
+    },
+    "t7_stone_travertine_tiles": {
+      "reads_as": "tan-orange tiled blocks in the editor render: brush headstones, benches, plinths and urns read as cardboard",
+      "use_instead": "t7_stone_marble_tile_4x4 (speckled grey granite, LOOK_SURFACES) for grave furniture",
+      "confidence": "review_only",
+      "source": "the cemetery's hero render; swapped in cemetery_kit.STONE"
+    },
+    "t7_brick_worn_heavy_grout_red": {
+      "reads_as": "flat pinkish brick over a long open-air wall: one texture for 2,000 units reads as a backdrop, not masonry",
+      "use_instead": "t7_concrete_bunker_layered_02 for the wall, t7_stone_slate_tile_grey for piers and copings (dressing.boundary_wall)",
+      "confidence": "review_only",
+      "source": "the cemetery's hero render"
+    }
+  },
+  "gaps": [
+    {
+      "want": "a linkable wooden dining/farmhouse table",
+      "note": "no wooden table model links in a usermap; the only linkable tables are metal lab and office desks. The corn maze farmhouse table is built from brushes (plank top, four legs, rails, a clip volume).",
+      "confidence": "measured",
+      "source": "corn maze design review (_brush_table)"
+    },
+    {
+      "want": "a measured Wunderfizz body (p7_zm_vending_wonder)",
+      "note": "p7_zm_vending_wonder is not among the stock models MODEL_BOX was built from, and its zbarrier has no collision model. Z42 (blueprint/reach.py \"wunderfizz\" row) borrows a perk machine's 64x48x72 box instead of a real measurement; its apron, stand box and use-trigger offset are unverified too. No recipe places a Wunderfizz yet.",
+      "confidence": "measured",
+      "source": "src/zmforge/blueprint/reach.py (the Z42 wunderfizz row)"
+    },
+    {
+      "want": "a sack-head or straw-hat model for a scarecrow",
+      "note": "neither exists in the stock catalogue or the Kenney kit (CATALOGUE_BOX searched for hat/sack/burlap/straw/scarecrow: none); corn_maze_parts builds the head and hat from brushes",
+      "confidence": "measured",
+      "source": "corn maze design review; recipes/props.py CATALOGUE_BOX search"
+    },
+    {
+      "want": "a linkable tree, ivy, hedge, church spire or skyline model for outdoor backdrops",
+      "note": "p7_foliage_tree_albizia_tall_full, p7_foliage_tree_olive_small, p7_foliage_leaves_ivy_dead_128x64/_32x16 and p7_foliage_hedge_box_* are declared on the install but have no MODEL_BOX entry, and no spire or skyline model exists; dressing.backdrop builds bare trees, a spire and rooftops from brushes instead",
+      "confidence": "measured",
+      "source": "MODEL_BOX lookup and blueprint/installed_assets.json xmodels_declared"
+    },
+    {
+      "want": "a per-prop recolour for the Kenney graveyard kit (gravestones, iron fence, hay, fences)",
+      "note": "every graveyard prop draws from one texture atlas (material 'colormap', Kd 1 1 1, map_Kd colormap.png), so props/library.py's per-prop 'colours' override (built for flat-colour swatch kits like the corn) would flatten each prop to one colour and clash across the kit (palette_colours raises on a shared material with two colours). Recolouring needs an atlas edit, not an override",
+      "confidence": "measured",
+      "source": "assets-cache/extracted-for-tests/kenney_graveyard/*.obj usemtl and *.mtl, and props/build.py palette_colours"
+    }
+  ]
+}

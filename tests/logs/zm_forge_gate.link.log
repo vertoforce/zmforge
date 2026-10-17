@@ -1,0 +1,7 @@
+Linking "zm_forge_gate" (usermaps\zm_forge_gate stable 3421953 v593): processing...
+^3Failed to open file C:\Program Files (x86)\Steam\steamapps\common\Call of Duty Black Ops III 455130\/share/raw/maps/zm/zm_forge_gate.led
+  gfx_map:maps/zm/zm_forge_gate.d3dbsp
+^3Failed to load Lighting Export Data. Please (re)export from Radiant. Falling back to preview lighting.
+  gfx_map:maps/zm/zm_forge_gate.d3dbsp
+done: 0m3.83s
+Linking "en_zm_forge_gate" (usermaps\zm_forge_gate stable 3421953 v593): unchanged...done: 0m0.77s

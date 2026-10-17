@@ -1,0 +1,14 @@
+# Nothing in the build context except the Dockerfile's three COPY targets.
+#
+# WHY, even though it is already true: the Dockerfile COPYs three files, and
+# BuildKit only transfers what a COPY names, so a build here moves 110 bytes
+# of context [measured: "transferring context: 2B" and "108B"].
+# The classic builder does not do that - it tars the whole directory, which
+# runs to gigabytes once a mod-tools copy sits inside it. This file makes the
+# image's independence from the tools a property of the repository rather
+# than a property of which builder happens to run.
+*
+
+!entrypoint.sh
+!with-display.sh
+!xorg-headless.conf

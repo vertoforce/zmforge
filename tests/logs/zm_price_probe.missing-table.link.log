@@ -1,0 +1,10 @@
+Linking "zm_price_probe" (usermaps\zm_price_probe stable 3421953 v593): processing...
+^3Failed to open file C:\Program Files (x86)\Steam\steamapps\common\Call of Duty Black Ops III 455130\/share/raw/maps/zm/zm_price_probe.led
+  gfx_map:maps/zm/zm_price_probe.d3dbsp
+^3Failed to load Lighting Export Data. Please (re)export from Radiant. Falling back to preview lighting.
+  gfx_map:maps/zm/zm_price_probe.d3dbsp
+^3WARNING: missing stringTable gamedata/weapons/zm/zm_price_probe_weapons.csv
+  stringtable:gamedata/weapons/zm/zm_price_probe_weapons.csv
+    csv:zone_source/zm_price_probe.zone
+done: 0m24.09s
+Linking "en_zm_price_probe" (usermaps\zm_price_probe stable 3421953 v593): unchanged...done: 0m2.73s

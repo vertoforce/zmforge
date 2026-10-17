@@ -1,0 +1,31 @@
+# Only for building the image and for poking at it by hand:
+#
+#     docker compose build
+#     docker compose run --rm wine bash
+#
+# Builds do not go through here. zmforge and scripts/wine-*.sh build their own
+# `docker run` argument list per stage, because the bake needs a GPU, a name to
+# be killed by and three shim mounts that the compile and the link must not
+# get (see SETUP.md).
+services:
+  wine:
+    build:
+      context: .
+    image: bo3-wine:local
+    container_name: bo3-wine
+    # Nothing to serve and nothing to keep running: this is a batch worker
+    # started per build.
+    restart: "no"
+    volumes:
+      # The user's own mod-tools install. Never baked into the image, never
+      # published. ZMFORGE_WINE_TOOLS comes from bo3-wine.env, which is where
+      # a fresh checkout says where its install is.
+      - ${ZMFORGE_WINE_TOOLS:-./tools}:/tools
+      - ${ZMFORGE_WINE_PREFIX:-./wineprefix}:/wineprefix
+      - ./logs:/logs
+    environment:
+      - WINEPREFIX=/wineprefix
+      - WINEDEBUG=-all
+      - WINEARCH=win64
+# No networks section: the container needs no network. It reads the tools off
+# a bind mount and writes its output back to one.

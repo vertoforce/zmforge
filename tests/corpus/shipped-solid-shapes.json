@@ -1,0 +1,42 @@
+{
+ "tools_root": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Call of Duty Black Ops III 455130",
+ "files": 724,
+ "patch_containers": 22795,
+ "brush_containers": 27559,
+ "shapes": {
+  "contents face }": 1,
+  "guid contents face }": 13333,
+  "guid face }": 11913,
+  "guid kw { contents toolFlags word dims grid }": 9078,
+  "guid kw { contents toolFlags word dims grid OTHER:decalLayerSort OTHER:decalEditorSort }": 8561,
+  "guid kw { contents toolFlags word OTHER:smoothing dims grid }": 188,
+  "guid kw { contents toolFlags word OTHER:smoothing dims grid OTHER:decalLayerSort OTHER:decalEditorSort }": 55,
+  "guid kw { layer contents toolFlags word dims grid }": 160,
+  "guid kw { layer contents toolFlags word dims grid OTHER:decalLayerSort OTHER:decalEditorSort }": 50,
+  "guid kw { layer toolFlags word dims grid }": 74,
+  "guid kw { layer toolFlags word dims grid OTHER:decalLayerSort OTHER:decalEditorSort }": 44,
+  "guid kw { toolFlags word dims grid }": 3370,
+  "guid kw { toolFlags word dims grid OTHER:decalLayerSort OTHER:decalEditorSort }": 1192,
+  "guid kw { toolFlags word OTHER:smoothing dims grid }": 23,
+  "guid layer contents face }": 1256,
+  "guid layer face }": 1056
+ },
+ "examples": {
+  "contents face }": "\\map_source\\_prefabs\\zm\\zm_giant\\geo\\factory_wuen_weapons.map",
+  "guid contents face }": "\\map_source\\_prefabs\\mp\\mp_combine\\mp_combine_geo.map",
+  "guid face }": "\\map_source\\mp\\mp_combine.map",
+  "guid kw { contents toolFlags word dims grid }": "\\map_source\\_prefabs\\mp\\mp_combine\\geo\\mp_combine_bridge_light_panel_floor_01.map",
+  "guid kw { contents toolFlags word dims grid OTHER:decalLayerSort OTHER:decalEditorSort }": "\\map_source\\_prefabs\\mp\\mp_combine\\geo\\mp_combine_bunkbed_door.map",
+  "guid kw { contents toolFlags word OTHER:smoothing dims grid }": "\\map_source\\_prefabs\\mp\\mp_combine\\geo\\mp_combine_terrain_south.map",
+  "guid kw { contents toolFlags word OTHER:smoothing dims grid OTHER:decalLayerSort OTHER:decalEditorSort }": "\\map_source\\_prefabs\\mp\\mp_combine\\geo\\mp_combine_terrain_south.map",
+  "guid kw { layer contents toolFlags word dims grid }": "\\map_source\\_prefabs\\mp\\mp_combine\\geo\\mp_combine_aquaculture_bdg_south\\mp_combine_aquaculture_main_bdg.map",
+  "guid kw { layer contents toolFlags word dims grid OTHER:decalLayerSort OTHER:decalEditorSort }": "\\map_source\\_prefabs\\zm\\zm_giant\\geo\\zm_giant_mainframe_area.map",
+  "guid kw { layer toolFlags word dims grid }": "\\map_source\\_prefabs\\mp\\mp_combine\\script\\mp_combine_spawns.map",
+  "guid kw { layer toolFlags word dims grid OTHER:decalLayerSort OTHER:decalEditorSort }": "\\map_source\\_prefabs\\zm\\zm_giant\\geo\\zm_giant_zonec.map",
+  "guid kw { toolFlags word dims grid }": "\\map_source\\zm\\zm_giant.map",
+  "guid kw { toolFlags word dims grid OTHER:decalLayerSort OTHER:decalEditorSort }": "\\map_source\\_prefabs\\mp\\mp_combine\\geo\\mp_combine_bridge_light_panel_floor_01.map",
+  "guid kw { toolFlags word OTHER:smoothing dims grid }": "\\map_source\\_prefabs\\mp\\mp_combine\\geo\\mp_combine_terrain_south.map",
+  "guid layer contents face }": "\\map_source\\zm\\zm_giant.map",
+  "guid layer face }": "\\map_source\\zm\\zm_giant.map"
+ }
+}
