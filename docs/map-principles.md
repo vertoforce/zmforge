@@ -26,6 +26,7 @@ One principle per line. The id is what the review's JSON uses; "Judge" says what
 - **P20 Power-locked first door.** Locking the very first door until the power is on is a valid pattern to send players to the power switch first, but the switch itself must be reachable from every starting zone with no purchase at all, or the map softlocks (cemetery). `Z80` walks the zone graph from spawn, treating a power-gated door as impassable, and fails when the only ways to the power switch's zone all cross one. *Judge:* the door graph's power-gated edges against the walk from spawn; a power-gated door is fine anywhere else on the route.
 - **P21 Presentation images are the map itself plus its title.** The loading screen is the map's own top-down plan (the `planview` drawing: floors, prop footprints, spawns, doors, machines, starts), framed to fill the screen, with the title; the preview card and the Workshop thumbnail are an in-map photograph with the baked lighting (a `--baked` render, graded, with a fake haze when the map has fog) with the title. Never a generated illustration, figure or clip-art. `zmforge loadscreen <recipe>` makes all three; `generate` picks them up from `build-out/presentation/<map>/`.
 - **P22 Every map has a gamble machine at its farthest point.** One machine per map: hold use to pay 2,000 for a 1 in 4 chance at 10,000, once per player per round, only when the player can pay. It stands against a wall at the spot with the longest *walk* from the spawn (the hub after a sealed start), in a room players can open, clear of lanes, interactives and doorways, lit by a small light pool, with its name (`LUCKY 4`) on the wall above. Code: `dressing/gamble.py` (placement and look, run by every `Project.commit`), `script/gamble.py` (the mechanic). *Judge:* `Z87` finds exactly one, reachable, charging only after `can_player_purchase`; test maps opt out with `bp.signature_gamble = False`.
+- **P23 One recipe per feature, stock first.** Where a feature has a stock mechanism and a community one, the map uses one of them, the stock one where it exists, and never both: per-room ambience is `ambient_package` triggers baked by the sound converter, not the community `ambient_room` client script as well; a window's entrance tag sits on the barricade prefab or on its `exterior_goal` struct, consistently. An asset copied from a stock donor has what the donor carried reset (desaturation, colour tint, atlas column count, alias template). (from t7_companion) *Judge:* the recipe source and emitted files use one mechanism per feature; `Z92` holds the entrance-tag half.
 
 <details><summary>Render rules, and where each is enforced</summary>
 
@@ -38,6 +39,18 @@ Each render rule below is a generic check or helper.
 - Whole assemblies, litter in drifts, varied wall modules: `dressing.hang_bar`, `dressing.drift_points`, `dressing.no_repeat`, and the P15 Judge note.
 - Keep-outs stop at the wall behind a machine; no plain boards over bare walls; know the preview's limits: P15 Judge note.
 - Open-air walls dressed (piers, coping, plinth, railing, foot props) and low enough to show the sky, with silhouettes beyond: `dressing.boundary_wall`, `dressing.backdrop`, `add_room(wall_height=)`, checks `Z62`/`Z63`. Long walks narrowed and roofed by set pieces, brush dressing in grey stone not tan: P15 Judge note.
+
+</details>
+
+<details><summary>Build and engine principles (from t7_companion), and where each is enforced</summary>
+
+These are about how a map is built and checked, not how it plays, so the review does not grade them per room.
+
+- **Prove the build saw it.** A stage that fails silently is checked by what it wrote (the compiled entity text, `ambientgeometry.json`'s `Triggers`, the linker's `.deps` and the `.ff`), not by the source looking right. Enforced: the stage checks; `Z92` rests on the compiled `.d3dbsp`.
+- **Silence is not a pass.** On a usermap Treyarch's asserts do not run, so a rule the stock scripts only guard with an assert needs a static check before the build: `Z86` (a respawn point sits in the zone its `script_noteworthy` names), `Z92` (spawn names a declared entrance).
+- **Read the newest session.** A console log can hold several sessions or be from the previous run; count only from the last `Game Initialization`. See `how-zombies-maps-work.md`, "Asserts are silent on a usermap".
+- **Instrument, then fix.** When a stack trace is all stock, mark each candidate line with an on-screen print and let one run say which ran, instead of fixing a guessed cause.
+- **Effects belong to the client.** Effects and sounds are driven by clientfields, one-shot events use `counter` fields, and the effect precache budget (256 server, 1024 client) is spent deliberately `[reported]`. No check: the limit is unverified here.
 
 </details>
 

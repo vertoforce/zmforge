@@ -471,6 +471,70 @@ def test_z8_a_barricade_may_be_paired_with_a_walk_in_spawn(committed) -> None:
     assert [f for f in report.errors if f.code == "Z8"] == []
 
 
+def _with_structs(map_text: str, *structs: dict[str, str]) -> str:
+    """The map text with extra ``script_struct`` entities appended."""
+    out = [map_text.rstrip("\n")]
+    for kvps in structs:
+        body = "\n".join(f'"{k}" "{v}"' for k, v in {"classname": "script_struct", **kvps}.items())
+        out.append("{\n" + body + "\n}")
+    return "\n".join(out) + "\n"
+
+
+def _z92(map_text: str, server: str) -> list:
+    report = check_gameplay(parse_map_text(map_text), server)
+    return [f for f in report.errors if f.code == "Z92"]
+
+
+_EXTRA_RISER = {
+    "targetname": "start_spawners",
+    "script_noteworthy": "riser_location",
+    "origin": "0 0 16",
+}
+
+
+def test_z92_the_fixture_declares_every_entrance_it_asks_for(committed) -> None:
+    assert _z92(committed["map_text"], committed["server"]) == []
+
+
+def test_z92_a_spawn_asking_for_an_undeclared_entrance_fails(committed) -> None:
+    """``findNodesService`` finds no exterior goal for the tag (_zm_behavior.gsc:1242)."""
+    text = _with_structs(
+        committed["map_text"], {**_EXTRA_RISER, "script_string": "side_door_link"}
+    )
+    found = _z92(text, committed["server"])
+    assert len(found) == 1
+    assert "side_door_link" in found[0].message
+
+
+def test_z92_find_flesh_needs_no_entrance(committed) -> None:
+    text = _with_structs(
+        committed["map_text"], {**_EXTRA_RISER, "script_string": "find_flesh"}
+    )
+    assert _z92(text, committed["server"]) == []
+
+
+def test_z92_an_exterior_goal_struct_declares_its_own_tag(committed) -> None:
+    text = _with_structs(
+        committed["map_text"],
+        {**_EXTRA_RISER, "script_string": "side_door_link"},
+        {"targetname": "exterior_goal", "script_string": "side_door_link", "origin": "0 64 16"},
+    )
+    assert _z92(text, committed["server"]) == []
+
+
+def test_z92_a_barricade_whose_tag_changed_strands_its_spawn(committed) -> None:
+    """Renaming one side of a window pair leaves the other side's tag undeclared."""
+    document = committed["document"]
+    barricade = next(
+        e for e in document.entities_of("misc_prefab") if "barricade" in e.value("model")
+    )
+    tag = barricade.value("script_string")
+    line = f'"script_string" "{tag}"'
+    assert committed["map_text"].count(line) == 2
+    text = committed["map_text"].replace(line, '"script_string" "renamed_link"', 1)
+    assert len(_z92(text, committed["server"])) == 1
+
+
 def test_z8_a_window_can_ask_for_the_walk_in_spawn() -> None:
     """The generator half: ``add_window(spawn_kind=...)`` reaches the file."""
     blueprint = Blueprint("zm_forge_walk")

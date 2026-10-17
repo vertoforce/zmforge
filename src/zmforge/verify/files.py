@@ -387,6 +387,7 @@ def check_gameplay(
     _check_factories(document, report)
     _check_door_entities(document, script, report)
     _check_barricades(document, report)
+    _check_entrance_tags(document, report)
     _check_perk_modules(document, script, client_script, report)
     _check_wunderfizz(document, script, client_script, report)
     _check_custom_perks(document, script, client_script, report)
@@ -1027,6 +1028,60 @@ def _check_barricades(document: Document, report: Report) -> None:
                     "rather than wrong",
                 )
             )
+
+
+#: The one ``script_string`` a zombie-location struct may carry without an
+#: entrance: ``findNodesService`` returns before it looks for an exterior
+#: goal (``_zm_behavior.gsc:1235``).
+NO_ENTRANCE_TAG = "find_flesh"
+
+
+def _check_entrance_tags(document: Document, report: Report) -> None:
+    """Z92: every non-``find_flesh`` spawn tag names a declared entrance.
+
+    Z8 asks the barricade side (each window's tag matches exactly one
+    struct).  This is the other side.  A zombie takes its spawn struct's
+    ``script_string`` as ``find_flesh_struct_string`` (``_zm_spawner.gsc:583``)
+    and ``findNodesService`` (``_zm_behavior.gsc:1226-1251``) walks
+    ``level.exterior_goals`` for one whose ``script_string`` equals it.  None
+    found leaves the node undefined, so every zombie from that struct fails
+    its goal while the ``find_flesh`` ones behave.
+
+    An entrance is declared in one of two ways: an ``exterior_goal`` struct
+    carrying the tag itself, or a barricade ``misc_prefab`` carrying it.  The
+    second works because the compiler copies the instance's ``script_string``
+    onto the ``exterior_goal`` inside the prefab: measured in the compiled
+    entity text of ``zm_forge_gate.d3dbsp``, where the stock prefab's struct,
+    which has no ``script_string`` of its own, comes out with the window's
+    tag.  (t7_companion reports that this copy does not happen; our build
+    output says it does.)
+    """
+    declared = {
+        e.value("script_string")
+        for e in document.entities_of("misc_prefab")
+        if "barricade" in (e.value("model") or "") and e.value("script_string")
+    }
+    declared |= {
+        e.value("script_string")
+        for e in document.entities_of("script_struct")
+        if e.value("targetname") == "exterior_goal" and e.value("script_string")
+    }
+    for entity in document.entities_of("script_struct"):
+        if not ZOMBIE_LOCATION_MARKERS & set(
+            (entity.value("script_noteworthy") or "").split()
+        ):
+            continue
+        tag = entity.value("script_string")
+        if not tag or tag == NO_ENTRANCE_TAG or tag in declared:
+            continue
+        report.add(
+            error(
+                "Z92",
+                f"spawn struct for {entity.value('targetname')!r} asks for "
+                f"entrance {tag!r}, which no barricade or exterior_goal "
+                f"declares; use {NO_ENTRANCE_TAG!r} for a spawn with no window",
+            )
+        )
 
 
 #: ``zm_perk_random::include_perk_in_random_rotation( "<specialty>" );`` as

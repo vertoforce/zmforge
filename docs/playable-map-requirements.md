@@ -28,7 +28,7 @@ The older `zmforge check` command is not this. It runs the file-level half
 only, and prints findings rather than a line per requirement. It stays for
 callers that want the short form.
 
-The table lives in `src/zmforge/verify/registry.py`: 143 rows, 138 automated and
+The table lives in `src/zmforge/verify/registry.py`: 144 rows, 139 automated and
 5 that need a person. `tests/test_requirements.py` asserts those three counts,
 and that this document names every row and invents none.
 
@@ -37,7 +37,7 @@ and that this document names every row and invents none.
 Automated, by what it reads:
 
 - Model, before anything is written: `Z44`, `Z18`, `Z6`, `W1`, `W2`, `W3`, `Z19`, `N1`, `N2`, `N3`, `N4`, `N5`, `Z25`, `Z48`, `Z46`, `Z74`, `Z75`, `Z76`, `Z77`, `Z40`, `Z23`, `Z41`, `Z42`, `Z43`, `W6`, `Z31`, `Z32`, `Z53`, `Z54`, `Z55`, `Z56`, `Z57`, `Z58`, `Z59`, `Z62`, `Z63`, `Z64`, `Z65`, `Z66`, `Z61`, `S1`, `S2`, `S3`, `S4`, `S5`, `S6`, `D1`, `D4`, `D5`, `D6`, `D7`, `D8`, `Z80`, `Z81`, `Z84`, `Z85`, `Z86`, `Z87`, `Z88`, `Z89`, `Z91`, and the model half of `Z1`, `Z3`, `Z4`, `Z5`, `Z7`, `Z8`, `Z9`, `Z10`, `Z11`, `Z12`, `Z13`, `Z15`, `Z28`, `G7`, `Z22`, `W5`, `Z50`.
-- Written files: `Z44`, `Z2`, `Z26`, `Z49`, `Z50`, `Z29`, `Z30`, `Z14`, `Z16`, `Z17`, `Z20`, `Z21`, `Z24`, `Z27`, `Z45`, `Z47`, `Z51`, `Z52`, `W4`, `L2`, `P1`, `P2`, `P3`, `Z90`, `F1` through `F9`, `Z67` through `Z73`, `Z79` and `Z82` (`verify/gameplay.py`, over the generated script and `.str`), `Q1` through `Q7` (`verify/quest_safety.py`, over the generated script and `.map`), `Z78` (`verify/sealed_start.py`: after a sealed start resolves, no respawn lands in a sealed zone), `Z83` (`verify/umbra_air.py`: player spawns in at most one sealed pocket of air), and the file half of the codes above.
+- Written files: `Z44`, `Z2`, `Z26`, `Z49`, `Z50`, `Z29`, `Z30`, `Z14`, `Z16`, `Z17`, `Z20`, `Z21`, `Z24`, `Z27`, `Z45`, `Z47`, `Z51`, `Z52`, `W4`, `L2`, `P1`, `P2`, `P3`, `Z90`, `Z92`, `F1` through `F9`, `Z67` through `Z73`, `Z79` and `Z82` (`verify/gameplay.py`, over the generated script and `.str`), `Q1` through `Q7` (`verify/quest_safety.py`, over the generated script and `.map`), `Z78` (`verify/sealed_start.py`: after a sealed start resolves, no respawn lands in a sealed zone), `Z83` (`verify/umbra_air.py`: player spawns in at most one sealed pocket of air), and the file half of the codes above.
 - Build logs: `leak`, `stage_error`, `stage_failed`, `missing_material`, `missing_material_benign`, `umbra_unset`, `caulk_terrain`, `preview_lighting`, `shadows_dropped`.
 - The navmesh the compiler wrote: `H1`. The only row that reads a build artefact, and the only one that answers for the walkers rather than the player. It needs the model too, because the finding is the difference between the two.
 
@@ -244,6 +244,40 @@ them; if they ever disagree, §4.6 is the one to trust and the other is the bug.
 The spec's §8.4 example uses the same 96 by 112 at sill 0. Appendix C records
 the older 64 by 48 window at sill 48 that its map was built with, and sends a
 rebuild back to §4.6.
+
+### A spawn that asks for a window nobody declared
+
+Symptom: zombies from one spawn struct stand still or throw script errors as
+they appear, while zombies from every other spawn in the same map behave. It
+looks intermittent because only that struct's zombies are affected.
+
+Rule: a zombie spawn struct's `script_string` is either `find_flesh` (no
+window, just chase) or the tag of an entrance some barricade declares. Any
+other value is a dead end. (Reported by t7_companion; mechanism confirmed in
+the stock scripts.)
+
+Check: `Z92`, file level, an error. It is the other half of `Z8`, which only
+asks whether each window's tag reaches a struct.
+
+<details><summary>Why, and the prefab-tag question</summary>
+
+- The zombie copies its struct's `script_string` into
+  `find_flesh_struct_string` (`_zm_spawner.gsc:583`). `findNodesService`
+  (`_zm_behavior.gsc:1226-1251`) returns early for `find_flesh`, and otherwise
+  looks through `level.exterior_goals` for one with the same `script_string`.
+  None found leaves the node undefined; the only guard is an `assert`, and
+  asserts do not run on a usermap (see "Asserts are silent on a usermap" in
+  `how-zombies-maps-work.md`).
+- t7_companion says a `script_string` set on the barricade **prefab instance**
+  never reaches the `exterior_goal` struct inside the prefab. Our build output
+  says the opposite. The stock `barricade_reciever_wood.map` struct has no
+  `script_string`, yet in the compiled entity text of `zm_forge_gate.d3dbsp`
+  both of its `exterior_goal` structs carry the window's tag
+  (`start_window_south_link`, `start_window_north_link`). Treyarch's
+  `zm_giant_nodes.map` uses the same prefab-level tag on its barricades. So
+  `Z92` counts a barricade prefab's tag as a declared entrance.
+
+</details>
 
 ## The map is black, or washed out, or renders as sky
 

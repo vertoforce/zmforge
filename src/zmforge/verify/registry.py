@@ -174,6 +174,13 @@ CHECKS: tuple[Check, ...] = (
         "blueprint files",
     ),
     Check(
+        "Z92",
+        "every zombie spawn struct whose script_string is not find_flesh names "
+        "an entrance a barricade prefab or an exterior_goal struct declares "
+        "(the converse of Z8; findNodesService finds no node otherwise)",
+        "files",
+    ),
+    Check(
         "Z10",
         "statement order in main(), and the dog flag set before the framework "
         "entry rather than after it",

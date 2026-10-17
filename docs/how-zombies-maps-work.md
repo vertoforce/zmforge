@@ -1913,6 +1913,43 @@ The signatures are also less useful than they look. Every one of them reads
 `void`, including obvious value-returning functions, so the reference gives
 arity and existence and not types `[measured]`.
 
+## Asserts are silent on a usermap, and the log may be the last run's
+
+Short version: on a usermap, Treyarch's `assert` lines never run, so a missing
+assert says nothing. And the console log on disk may belong to an earlier run.
+Read the newest session of the newest log, and prefer a check before the build
+to an assert after it. (from t7_companion)
+
+<details><summary>What is verified, and what is reported</summary>
+
+- `assert` is "Only tested when devblocks are enabled" `[Treyarch doc:
+  gsc-language.md, line 494]`. The dvar that enables them is
+  `scr_mod_enable_devblock`, and the Launcher's own tooltip says "Developer
+  blocks are executed in mods" `[measured: strings in bin/modlauncher.exe]`.
+  That it does not take on a usermap is `[reported]` by t7_companion's
+  maintainer.
+- So asserts this project cites as the symptom, such as
+  `player_respawn_point: You must specify a script noteworthy with the zone
+  name` (`_zm_zonemgr.gsc:826`) or "Did not find an entrance node"
+  (`_zm_behavior.gsc:1251`, see `Z92`), will usually not be printed. The code
+  carries on with an undefined value instead, which is why the generator
+  checks these statically.
+- The Launcher's Dvars dialog only applies to a Launcher Run. A game started
+  any other way gets no `logfile`, so it writes no new log, and the old one
+  reads as current `[reported]`.
+- A usermap run's `console_mp.log` lands at the game root, not under
+  `usermaps/<map>/`. Every map reload inside one game process appends another
+  session, so the first match in the file is the oldest. Cut to the last
+  `Game Initialization` line before counting anything `[reported]`.
+- `ai_disableSpawn` is one of the Launcher's persisted dvars. Left on, no AI
+  spawns and the log fills with `spawn prevented by ai_disableSpawn or
+  g_spawnai` `[reported]`.
+- A load that dies on `Clientfield Mismatch` names no field. Relaunching with
+  `com_clientfieldsdebug 1` prints which side is missing which registration
+  `[reported]`.
+
+</details>
+
 ## The script-pack question, settled narrower than the community states it
 
 The community rule is that a pack's `#using` belongs in both the `.gsc` and the
@@ -1932,6 +1969,56 @@ A loose script needs three artefacts, not two: the `#using`, the
 outside the pack, which is why it cannot be checked and has to be playtested.
 
 ---
+
+## Smaller script traps, from t7_companion
+
+Each of these fails without an error. The ones marked `[stock script]` were
+read in our install; the rest are `[reported]` by t7_companion and untested
+here.
+
+<details><summary>The list</summary>
+
+- **A use prompt made with `create_unitrigger`** notifies its parent with
+  `"trigger_activated"`, never `"trigger"` (`_zm_unitrigger.gsc:923`)
+  `[stock script]`.
+- **Zombies are near-sighted on purpose.** `zombie_setup_attack_properties`
+  sets `self.maxsightdistsqrd = 128 * 128` and nothing restores it
+  (`_zm_spawner.gsc:2497`) `[stock script]`. In a big open area that reads as
+  broken AI.
+- **Water risers** take `script_parameters "in_water"` on the struct
+  (`_zm_spawner.gsc:3090`); the splash effect is client-side and needs
+  `level.use_water_risers` (`_zm.csc:308`) `[stock script]`.
+- **Making an AI immune to Pack-a-Punch ammo effects** is
+  `aat::register_immunity(name, archetype, ...)` (`aat_shared.gsc:303`), the
+  way dogs are done `[stock script]`.
+- **Visionsets register in the first frame.** `visionset_mgr_shared.gsc:32`
+  asserts that all registration happens while the system initialises, so no
+  `wait` before it `[stock script]`.
+- **Shield-part icons never show on a usermap.** `_zm_craft_shield.gsc` writes
+  `zmInventory.widget_shield_parts` and nothing in the install registers it
+  `[stock script, by search]`.
+- **`struct::get` and `get_array` index only nine keys** (`target`,
+  `targetname`, `script_noteworthy`, `script_linkname`, `script_label`,
+  `classname`, `script_unitrigger_type`, `scriptbundlename`, `prefabname`).
+  Asking by `script_int` returns an empty array `[reported]`; the install's
+  `codescripts/struct.gsc` is a stub, so we cannot read it.
+- **A KVP key Radiant does not declare** in `radiant/keys.txt` arrives in
+  script as undefined `[reported]`. The file is in the shipped fastfiles
+  (`rawfile,radiant/keys.txt` in `core_common.csv`), not on disk. Use stock
+  `script_*` keys.
+- **The effect precache tables are small**: 256 server effects, 1024 client
+  effects, and a zoned script's `#precache` counts even if nothing calls it.
+  Overflow stops the load with `Exceeded '256' items for type 'fx'`
+  `[reported]`. No map script in our install precaches more than 24
+  server effects; Treyarch's `zm_giant_fx.gsc` is that 24 `[measured]`.
+- **A client callback only runs on a change**, so a one-shot effect sent by
+  setting a field to 1 twice plays once. Stock uses `counter` fields with
+  `clientfield::increment` for one-shot events `[reported]`.
+- **`self Delete()` ends the calling thread** through its own
+  `endon("death")`, so bookkeeping after it never runs. Delete last
+  `[reported]`.
+
+</details>
 
 # Part 8: assets, and the several places a missing thing is silent
 
@@ -1969,6 +2056,15 @@ That is worth knowing even if you never do it, because it explains why two
 asset packs installed together produce duplicate-asset link errors often enough
 that a community tool exists solely to parse those errors out of linker output
 `[community]`.
+
+
+Two details of that route, `[reported]` by t7_companion and not yet tried here:
+the assetlist to edit is the tools root's `zone_source/all/assetlist/`, because
+`usermaps/<map>/zone_source/all/assetlist/<map>.csv` is the linker's own output
+and is rewritten on every link; and a line is commented with `//`, as every
+commented line in the shipped lists is, not with `#`. To prove which copy
+shipped, they append a few KB of junk to the file, relink, and compare the
+`.ff` size: no change means the linker never packed your file.
 
 A related case is text that shows as an ALL-CAPS token in game, usually
 starting `ZOMBIE_`. That is a localized string the map's fastfile does not
@@ -2063,6 +2159,39 @@ inconsistent]`. A map maker cannot resolve it from the documents.
 exists anywhere to copy `[measured]`, so a map that wants its own strings
 writes one. A `localize,<name>` line against a hand-written `.str` links clean
 `[measured]`; Part 5 and spec 5.7 carry the measurement.
+
+## Ambient rooms are baked from triggers, and the template turns the bake off
+
+Short version: per-room ambience and reverb come from `trigger_multiple`
+entities with `targetname ambient_package`, read by the sound converter at link
+time. The stock usermap template ships with the setting that points the
+converter at the map left empty, so nothing is baked until it is filled in.
+(from t7_companion; verified in our install)
+
+<details><summary>Evidence and the details</summary>
+
+- The converter, `sound/snd_convert.exe`, contains the strings
+  `ambient_package`, `script_ambientroom` and `script_ambientpriority`, and not
+  `ambient_room` `[measured]`. The community `ambient_room` recipe is a
+  separate client script system; pick one, never both `[reported]`.
+- Treyarch's `zm_giant_audio.map` prefab holds 29 `ambient_package` triggers
+  and `zm_giant.map` itself holds none `[measured]`. t7_companion reports the
+  converter does not look inside prefabs, so the triggers belong in the map
+  the `.szc` names `[reported]`.
+- `rex/templates/ZM Mod Level/.../template.szc` has `"MapFile" : ""`
+  `[measured]`. The converter writes
+  `usermaps/<map>/sound/zone/<map>.ambientgeometry.json`; an empty `Triggers`
+  array there means nothing was baked `[reported]`.
+- The converter enforces the WAV format with literal messages ("wav is not
+  48k sample rate", 16-bit, PCM, one or two channels), refuses spaces and
+  rooted paths in `FileSpec`, and says `no files for filespec` when the path
+  is wrong `[measured: strings in snd_convert.exe]`. `FileSpec` resolves from
+  `sound_assets/` `[reported]`.
+- On PC the `Compression` column changes nothing in the banks, and a
+  `streamed` one-shot can miss a precise first frame, so must-play one-shots
+  are `loaded` `[reported]`.
+
+</details>
 
 ## Prop collision is two keys and two files
 

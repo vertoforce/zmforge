@@ -3352,8 +3352,8 @@ checks run on the *files written by commit*, parsed back with the
 reader, not on in-memory objects.
 
 **Which list is authoritative, and what this one is for.** The table of
-checks that actually run is `src/zmforge/verify/registry.py` -- 143 rows,
-138 automated and 5 that need a person. `docs/playable-map-requirements.md`
+checks that actually run is `src/zmforge/verify/registry.py` -- 144 rows,
+139 automated and 5 that need a person. `docs/playable-map-requirements.md`
 states those counts and `tests/test_requirements.py` asserts them there. `docs/playable-map-requirements.md` is its prose mirror, organised
 by symptom, and it names every row. This section is **not** that list and
 is no longer maintained as a copy of it: it is the properties the

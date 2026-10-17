@@ -1,4 +1,22 @@
-# zmforge
+<div align="center">
+    <img src="docs/media/logo.svg" alt="zmforge logo" width="160" height="160"/>
+    <h1>zmforge</h1>
+    <h3><em>Black Ops III zombies maps, written in Python and built with Claude.</em></h3>
+</div>
+
+<p align="center">
+    <a href="LICENSE"><img src="https://img.shields.io/badge/license-PolyForm%20Noncommercial-blue" alt="License: PolyForm Noncommercial 1.0.0"/></a>
+    <img src="https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white" alt="Python 3.11+"/>
+    <a href="https://claude.com/claude-code"><img src="https://img.shields.io/badge/built%20for-Claude%20Code-D97757?logo=anthropic&logoColor=white" alt="Built for Claude Code"/></a>
+    <img src="https://img.shields.io/badge/checks-about%20140-brightgreen" alt="About 140 checks"/>
+</p>
+
+<p align="center">
+    <a href="#quick-start">Quick start</a> ·
+    <a href="#make-your-own-map-with-claude">Make a map with Claude</a> ·
+    <a href="docs/README.md">Docs</a> ·
+    <a href="#licence">Licence</a>
+</p>
 
 zmforge is Python tooling for making Call of Duty: Black Ops III custom
 zombies maps, built so that an AI coding agent like
